@@ -6,10 +6,10 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=luci-app-socat
-PKG_VERSION:=20230129
+PKG_VERSION:=20250606
 PKG_RELEASE:=1
 
-PKG_MAINTAINER:=Lienol <lawlienol@gmail.com>
+PKG_MAINTAINER:=Samuel-Chia <samuelchia@foxmail.com>
 
 LUCI_TITLE:=LuCI support for Socat
 LUCI_DEPENDS:=+socat
