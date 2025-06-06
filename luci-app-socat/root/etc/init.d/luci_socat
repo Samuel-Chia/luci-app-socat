@@ -42,6 +42,8 @@ run_service() {
 	config_get dest_proto $1 dest_proto
 	config_get dest_ip $1 dest_ip
 	config_get dest_port $1 dest_port
+	config_get max_children $1 max_children
+	config_get udp_timeout $1 udp_timeout
 	config_get proxy $1 proxy
 	config_get proxy_server $1 proxy_server
 	config_get proxy_port $1 proxy_port
@@ -77,7 +79,11 @@ run_service() {
 			[ -n "$proxy_server" ] && dest_proto="${dest_proto}:${proxy_server}"
 			[ -n "$proxy_port" ] && proxy_arg=",${proxy_arg}=${proxy_port}"
 		}
-		${CONFIG_PATH}/$1 ${listen}-listen:${listen_port}${ipv6only_params}${reuseaddr},fork ${dest_proto}:${dest_ip}:${dest_port}${proxy_arg} >/dev/null 2>&1 &
+		if [ "$proto" == "tcp" ]; then
+			${CONFIG_PATH}/$1 ${listen}-listen:${listen_port}${ipv6only_params}${reuseaddr},fork,max-children=${max_children} ${dest_proto}:${dest_ip}:${dest_port}${proxy_arg} >/dev/null 2>&1 &
+		else
+			${CONFIG_PATH}/$1 -T ${udp_timeout} ${listen}-listen:${listen_port}${ipv6only_params}${reuseaddr},fork,max-children=${max_children} ${dest_proto}:${dest_ip}:${dest_port}${proxy_arg} >/dev/null 2>&1 &
+		fi
 	fi
 	
 	[ "$firewall_accept" == "1" ] && {

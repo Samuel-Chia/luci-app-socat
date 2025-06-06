@@ -49,6 +49,12 @@ msgstr "目标地址"
 msgid "Destination port"
 msgstr "目标端口"
 
+msgid "Max children processes"
+msgstr "最大子进程数量"
+
+msgid "UDP timeout period"
+msgstr "UDP会话超时（秒）"
+
 msgid "Proxy"
 msgstr "代理"
 

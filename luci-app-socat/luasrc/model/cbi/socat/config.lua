@@ -75,6 +75,17 @@ o = s:option(Value, "dest_port", translate("Destination port"))
 o.datatype = "portrange"
 o.rmempty = false
 
+o = s:option(Value, "max_children", translate("Max children processes"))
+o.datatype = "uinteger"
+o.default = "100"
+o.rmempty = false
+
+o = s:option(Value, "udp_timeout", translate("UDP timeout period"))
+o.datatype = "uinteger"
+o.default = "60"
+o.rmempty = false
+o:depends({ proto = "udp"})
+
 o = s:option(ListValue, "proxy", translate("Proxy"))
 o:value("", translate("None"))
 o:value("socks4/4a", "Socks4/4a")
